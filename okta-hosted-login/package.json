@@ -21,7 +21,7 @@
     "@angular/router": "~11.2.14",
     "@giomamaladze/ng2-semantic-ui": "^1.0.1",
     "@okta/okta-angular": "https://artifacts.aue1d.saasure.com/artifactory/npm-topic/@okta/okta-angular/-/@okta/okta-angular-5.3.0-gfbaf8b2.tgz",
-    "@okta/okta-auth-js": "https://artifacts.aue1d.saasure.com/artifactory/npm-topic/@okta/okta-auth-js/-/@okta/okta-auth-js-7.0.0-g34df1ef.tgz",
+    "@okta/okta-auth-js": "https://artifacts.aue1d.saasure.com/artifactory/npm-topic/@okta/okta-auth-js/-/@okta/okta-auth-js-7.0.0-g3df843b.tgz",
     "rxjs": "~6.6.0",
     "semantic-ui-css": "^2.4.1",
     "tslib": "^2.0.0",
