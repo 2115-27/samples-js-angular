@@ -23,6 +23,7 @@ jobs:
      
       - name: Send notification
         run: |
+          sudo apt-get install mailutils
           TO_ADDRESS="malavikamanoj@infosys.com"
           FROM_ADDRESS="athulyams2000@gmail.com"
           SUBJECT="Mail Server Hosting Demo"
