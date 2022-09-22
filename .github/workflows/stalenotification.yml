@@ -23,33 +23,9 @@ jobs:
      
       - name: Send notification
         run: |
-          sudo apt-get install msmtp
-          
-          cat  <<EOF >~/.msmtprc
-          # Default settings
-          defaults
-          auth    on
-          tls    on
-          tls_starttls     on
-          tls_trust_file    /etc/ssl/certs/ca-certificates.crt
-          logfile ~/.msmtp.log
-          # outlook
-          account    outlook
-          host       smtp.office.365.com
-          port       587
-          from       athulya.s01@infosys.com
-          user       athulya.s01@infosys.com
-          password   Gandhi@47#
+          TO_ADDRESS="malavikamanoj@infosys.com"
+          FROM_ADDRESS="athulyams2000@gmail.com"
+          SUBJECT="Mail Server Hosting Demo"
+          BODY="This is a linux mail system. Linux is one of the email operating systems which can be used to send and receive emails."
 
-          account default : outlook
-          EOF
-         
-          echo ---------pwd,ls and ~/.msmtprc--------------
-          pwd
-          ls -lrta
-          cat ~/.msmtprc
-          
-          chmod 600 ~/.msmtprc
-          ls -lrta
-          echo -e "Subject: TestMail\n\nSending regards from Terminal." | msmtp -a outlook malavika.manoj@infosys.com
-          
+          echo ${BODY}| mail -s ${SUBJECT} ${TO_ADDRESS} -- -r ${FROM_ADDRESS}
