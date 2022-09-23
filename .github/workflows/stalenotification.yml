@@ -52,7 +52,7 @@ jobs:
           awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/BranchList.csv  >> ${{ github.workspace }}/StaleBranchList.csv
           
           echo ---------StaleBranchList.csv---
-          cat ${{ github.workspace }}/StaleBranchList.c
+          cat ${{ github.workspace }}/StaleBranchList.csv
      
       - name : Sending notification
         run: |
