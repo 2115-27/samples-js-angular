@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   
 jobs: 
-  dltStaleBranches:
+  Get_Stale_Branches:
     runs-on: ubuntu-latest
     environment: STALE
     steps:
@@ -57,7 +57,13 @@ jobs:
           echo -----------StaleBranchname.csv-----------------
           cut -d ',' -f 1 ${{ github.workspace }}/StaleBranchList.csv > ${{ github.workspace }}/StaleBranchname.csv
           cat ${{ github.workspace }}/StaleBranchname.csv
-          
+      
+      - name: Upload StaleBranchList.csv as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: StaleBranchList.csv
+          path: ${{ github.workspace }}/StaleBranchList.csv    
+      
       - name: Deleting stale branch  
         run: |
            pwd
