@@ -20,8 +20,65 @@ jobs:
           
           echo -----------BranchDetails.txt---------------
           cat ${{ github.workspace }}/BranchDetails.txt
+          
+          awk 'BEGIN{ FS= "|"; OFS=","; print "Branch,Last Committer Name,Committer Date"}; NR > 0{print $1, $2, $3;}' ${{ github.workspace }}/BranchDetails.txt > ${{ github.workspace }}/BranchList.csv
+          
+          echo --------BranchList.csv---------------
+          cat ${{ github.workspace }}/BranchList.csv
+          
+          file="${{ github.workspace }}/.github/days.txt"
+          Number_of_days=`grep Number_of_days $file |cut -d= -f2`
+          Headsup_duration=`grep Headsup_duration $file |cut -d= -f2`
+          
+          echo ===================
+          echo $Number_of_days
+          echo $Headsup_duration is the headsup duration
+         
+          days=$(( $Number_of_days + $Headsup_duration ))
+                  
+          echo ------------days with headsup duration-----------------
+          echo $days
+          
+          date_Xdays_before_TodayYear=$(date --date="$days days ago" +"%Y")
+          date_Xdays_before_TodayMonth=$(date --date="$days days ago" +"%m")
+          date_Xdays_before_TodayDay=$(date --date="$days days ago" +"%d")
+          
+          date_Xdays_before_Today="$date_Xdays_before_TodayYear-$date_Xdays_before_TodayMonth-$date_Xdays_before_TodayDay"
+          
+          echo ----------------date_Xdays_before_Today_headsup_duration_also_added-----------
+          echo $date_Xdays_before_Today
+          
+          echo --------showing dates less than "$date_Xdays_before_Today"------------
+          awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/BranchList.csv  >> ${{ github.workspace }}/StaleBranchList.csv
+          
+          echo ---------StaleBranchList.csv---
+          cat ${{ github.workspace }}/StaleBranchList.c
      
-      - run: |
-           gh issue create --title "My new issue" --body "Here are more details." --assignee @me -F BranchDetails.txt
-        env:
-             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name : Sending notification
+        run: |
+          echo sending notification
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+         
+         
+         
+         
+         
+         
