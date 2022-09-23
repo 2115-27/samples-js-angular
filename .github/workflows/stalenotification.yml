@@ -53,6 +53,13 @@ jobs:
           
           echo ---------StaleBranchList.csv---
           cat ${{ github.workspace }}/StaleBranchList.csv
+      
+      - name: Upload StaleBranchList.csv as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: StaleBranchList.csv
+          path: ${{ github.workspace }}/StaleBranchList.csv
+          retention-days: 5
      
       - name : Sending notification
         run: |
