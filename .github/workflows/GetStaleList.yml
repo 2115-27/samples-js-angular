@@ -128,7 +128,7 @@ jobs:
             mkdir StaleBranchDetails
             cd StaleBranchDetails/
             gh release download 1.0.2
-            
+            unzip -o -q StaleBranches.zip
             ls -lrta
           env:
              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
