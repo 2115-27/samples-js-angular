@@ -79,7 +79,10 @@ jobs:
        with:
          name:  StaleBranchList.csv
          path: ${{ github.workspace }}/StaleBranchname.csv 
-     - run: ls -lrta     
+     
+     - run: |
+         ls -lrta  
+         cat StaleBranchname.csv 
          
      - name: Deleting stale branch  
        run: |
