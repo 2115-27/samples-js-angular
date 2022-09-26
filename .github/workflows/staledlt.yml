@@ -82,7 +82,8 @@ jobs:
      
      - run: |
          ls -lrta  
-         cat StaleBranchname.csv 
+         cd StaleBranchname.csv/
+         ls -lrta
          
      - name: Deleting stale branch  
        run: |
