@@ -84,6 +84,7 @@ jobs:
          ls -lrta  
          cd StaleBranches/
          ls -lrta
+         cat StaleBranchname.csv
          cd ..
          pwd
          
@@ -91,6 +92,7 @@ jobs:
        run: |
            pwd
            ls -lrta
+           cd StaleBranches/
             file="${{ github.workspace }}/StaleBranches/StaleBranchname.csv"
             for i in `cat $file`
             do
