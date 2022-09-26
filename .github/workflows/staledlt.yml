@@ -78,7 +78,7 @@ jobs:
      - uses: actions/download-artifact@v3
        with:
          name:  StaleBranchName
-         path: ${{ github.workspace }}/StaleBranchname.csv 
+         path: ${{ github.workspace }}/StaleBranchName 
      
      - run: |
          ls -lrta  
