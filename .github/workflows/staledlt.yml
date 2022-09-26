@@ -60,7 +60,7 @@ jobs:
       - name: Upload StaleBranchList.csv as artifact
         uses: actions/upload-artifact@v3
         with:
-          name: StaleBranchList.csv
+          name: StaleBranchName
           path: ${{ github.workspace }}/StaleBranchList.csv    
   Approval:
     runs-on: ubuntu-latest
@@ -77,19 +77,19 @@ jobs:
 
      - uses: actions/download-artifact@v3
        with:
-         name:  StaleBranchList.csv
+         name:  StaleBranchName
          path: ${{ github.workspace }}/StaleBranchname.csv 
      
      - run: |
          ls -lrta  
-         cd StaleBranchname.csv/
+         cd StaleBranchName/
          ls -lrta
          
      - name: Deleting stale branch  
        run: |
            pwd
            ls -lrta
-            file="${{ github.workspace }}/StaleBranchname.csv"
+            file="${{ github.workspace }}/StaleBranchName/StaleBranchname.csv"
             for i in `cat $file`
             do
              echo "$i"
