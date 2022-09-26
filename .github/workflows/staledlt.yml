@@ -5,7 +5,6 @@ on:
 jobs: 
   Get_Stale_Branches:
     runs-on: ubuntu-latest
-    environment: STALE
     steps:
       - uses: actions/checkout@v2
       - name: Get Stale branch list
@@ -63,9 +62,25 @@ jobs:
         with:
           name: StaleBranchList.csv
           path: ${{ github.workspace }}/StaleBranchList.csv    
-      
-      - name: Deleting stale branch  
-        run: |
+  Approval:
+    runs-on: ubuntu-latest
+    environment: STALE
+    steps: 
+      - run: echo Approved to delete the stale branches listed in StaleBranchList.csv 
+    
+  Delete_Stale_Branches:
+    runs-on: ubuntu-latest
+    needs: Approval
+    steps:
+     - uses: actions/checkout@v2
+
+     - uses: actions/download-artifact@v3
+       with:
+         name:  StaleBranchList.csv
+         path: ${{ github.workspace }}/StaleBranchname.csv 
+         
+     - name: Deleting stale branch  
+       run: |
            pwd
            ls -lrta
             file="${{ github.workspace }}/StaleBranchname.csv"
