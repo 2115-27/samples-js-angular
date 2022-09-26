@@ -1,0 +1,129 @@
+name: DLT_STALE_TWO
+on:
+  workflow_dispatch:
+  
+jobs: 
+  Get_Stale_Branches:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get Stale branch list
+        run:  |
+          REPO_NAME=${{ github.event.repository.name }}
+          echo $REPO_NAME
+          git clone https://github.com/2115-27/$REPO_NAME.git
+          cd $REPO_NAME/
+          
+          git branch -a --sort=-committerdate  --format='%(refname:short) |%(authorname)| %(committerdate:short)'| sed /\${{ github.ref_name }}/d >> ${{ github.workspace }}/BranchDetails.txt
+          sed -i "s~origin/~~g" ${{ github.workspace }}/BranchDetails.txt
+          sed -i "s~,~~g" ${{ github.workspace }}/BranchDetails.txt
+          
+          echo --------BranchDetails.txt---------------
+          cat ${{ github.workspace }}/BranchDetails.txt
+          
+          awk 'BEGIN{ FS= "|"; OFS=","; print "Branch,Last Committer Name,Committer Date"}; NR > 0{print $1, $2, $3;}' ${{ github.workspace }}/BranchDetails.txt > ${{ github.workspace }}/BranchList.csv
+          
+          echo --------BranchList.csv---------------
+          cat ${{ github.workspace }}/BranchList.csv
+          
+          file="${{ github.workspace }}/.github/days.txt"
+          Number_of_days=`grep Number_of_days $file |cut -d= -f2`
+          Headsup_duration=`grep Headsup_duration $file |cut -d= -f2`
+          echo ===================
+          echo $Number_of_days
+          echo $Headsup_duration is the headsup duration
+         
+          days=$(( $Number_of_days + $Headsup_duration ))
+                  
+          echo ------------days with headsup duration-----------------
+          echo $days
+          
+          date_Xdays_before_TodayYear=$(date --date="$days days ago" +"%Y")
+          date_Xdays_before_TodayMonth=$(date --date="$days days ago" +"%m")
+          date_Xdays_before_TodayDay=$(date --date="$days days ago" +"%d")
+          
+          date_Xdays_before_Today="$date_Xdays_before_TodayYear-$date_Xdays_before_TodayMonth-$date_Xdays_before_TodayDay"
+          
+          echo ----------------date_Xdays_before_Today_headsup_duration_also_added-----------
+          echo $date_Xdays_before_Today
+          
+          echo --------showing dates less than "$date_Xdays_before_Today"------------
+          awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/BranchList.csv  >> ${{ github.workspace }}/StaleBranchList.csv
+          
+          echo ---------StaleBranchList.csv---
+          cat ${{ github.workspace }}/StaleBranchList.csv
+          
+      - name: Upload StaleBranchList.csv as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: StaleBranches
+          path: ${{ github.workspace }}/StaleBranchList.csv 
+
+
+
+
+
+
+
+ Upload_to_Github_Release:
+    needs: [Set_Release_Version,Build_and_Test,Fortify]
+    runs-on: ubuntu-latest
+    
+    permissions:
+          contents: write
+          packages: write
+          
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+          
+        - name: Deleting Existing Snapshot version
+          run: |     
+          
+                      gh release list >> release.txt
+                      ls -lart
+                      echo ---------Listing GitHub Releases stored in release.txt file---------
+                      cat release.txt
+                      echo ---------Deleting already existing stalebranch list to create new---------
+                      snapshotversion=$(grep -i "^cpqui-1.0-SNAPSHOT" release.txt | { grep -v grep || true; })
+                      echo $snapshotversion
+                      if [ -z "$snapshotversion" ];then
+                        echo "Creating 1.0-SNAPSHOT Release as it doesn't exist"              
+                      else
+                        echo "Deleting already existing 1.0-SNAPSHOT Release" 
+                        gh release delete 1.0-SNAPSHOT
+                      fi
+                  
+          env:
+             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+             
+        - name: Download artifact from github
+          uses: actions/download-artifact@v3
+          with:
+            name: cpqui-${{needs.Set_Release_Version.outputs.currentversion}}
+            path: ./cpqui-artifact
+            
+        - name: Zip package
+          run: |
+            ls -lrta
+            7z a cpqui-artifact.zip ./cpqui-artifact
+            ls -lrta
+            
+        - name: Create Github Release
+          id: create_release
+          uses: actions/create-release@v1
+          env:
+             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+             tag_name: ${{needs.Set_Release_Version.outputs.currentversion}}
+             release_name: cpqui-${{needs.Set_Release_Version.outputs.currentversion}}
+
+        - name: Upload Artifacts to Github Release
+          uses: actions/upload-release-asset@v1
+          env:
+             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+              upload_url: ${{ steps.create_release.outputs.upload_url }}
+              asset_path: ./cpqui-artifact.zip
+              asset_name: cpqui-${{needs.Set_Release_Version.outputs.currentversion}}.zip
+              asset_content_type: application/zip
