@@ -79,7 +79,7 @@ jobs:
                       echo ---------Listing GitHub Releases stored in release.txt file---------
                       cat release.txt
                       echo ---------Deleting already existing stalebranch list to create new---------
-                      snapshotversion=$(grep -i "^StaleBranches.zip" release.txt | { grep -v grep || true; })
+                      snapshotversion=$(grep -i "^Stale-Branches" release.txt | { grep -v grep || true; })
                       echo $snapshotversion
                       if [ -z "$snapshotversion" ];then
                         echo "Creating StaleBranches.zip Release as it doesn't exist"              
