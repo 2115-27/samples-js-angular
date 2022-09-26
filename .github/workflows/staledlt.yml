@@ -53,10 +53,6 @@ jobs:
           echo ---------StaleBranchList.csv---
           cat ${{ github.workspace }}/StaleBranchList.csv
           
-          echo -----------StaleBranchname.csv-----------------
-          cut -d ',' -f 1 ${{ github.workspace }}/StaleBranchList.csv > ${{ github.workspace }}/StaleBranchname.csv
-          cat ${{ github.workspace }}/StaleBranchname.csv
-      
       - name: Upload StaleBranchList.csv as artifact
         uses: actions/upload-artifact@v3
         with:
@@ -93,10 +89,14 @@ jobs:
        run: |
            pwd
            ls -lrta
-          
-            file="${{ github.workspace }}/StaleBranches/StaleBranchList.csv"
-            for i in `cat $file`
-            do
-             echo "$i"
-             git push origin --delete $i
-            done
+           
+           echo -----------StaleBranchname.csv-----------------
+           cut -d ',' -f 1 ${{ github.workspace }}/StaleBranches/StaleBranchList.csv > ${{ github.workspace }}/StaleBranchname.csv
+           cat ${{ github.workspace }}/StaleBranchname.csv
+           
+           file="${{ github.workspace }}/StaleBranchname.csv"
+           for i in `cat $file`
+           do
+            echo "$i"
+            git push origin --delete $i
+           done
