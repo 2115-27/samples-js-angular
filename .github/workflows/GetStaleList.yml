@@ -82,10 +82,10 @@ jobs:
                       snapshotversion=$(grep -i "^Stale-Branches" release.txt | { grep -v grep || true; })
                       echo $snapshotversion
                       if [ -z "$snapshotversion" ];then
-                        echo "Creating StaleBranches.zip Release as it doesn't exist"              
+                        echo "Creating Stale-Branches Release as it doesn't exist"              
                       else
-                        echo "Deleting already existing StaleBranches.zip Release" 
-                        gh release delete StaleBranches.zip
+                        echo "Deleting already existing Stale-Branches Release" 
+                        gh release delete Stale-Branches
                       fi
                   
           env:
