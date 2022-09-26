@@ -85,6 +85,7 @@ jobs:
          cd StaleBranches/
          ls -lrta
          cd ..
+         pwd
          
      - name: Deleting stale branch  
        run: |
