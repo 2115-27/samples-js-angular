@@ -85,7 +85,7 @@ jobs:
                         echo "Creating Stale-Branches Release as it doesn't exist"              
                       else
                         echo "Deleting already existing Stale-Branches Release" 
-                        gh release delete Stale-Branches
+                        gh release delete 1.0.2
                       fi
                   
           env:
