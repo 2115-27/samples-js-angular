@@ -64,13 +64,14 @@ jobs:
           path: ${{ github.workspace }}/StaleBranchList.csv    
   Approval:
     runs-on: ubuntu-latest
+    needs: Get_Stale_Branches
     environment: STALE
     steps: 
       - run: echo Approved to delete the stale branches listed in StaleBranchList.csv 
     
   Delete_Stale_Branches:
     runs-on: ubuntu-latest
-    needs: Approval
+    needs: [Get_Stale_Branches,Approval]
     steps:
      - uses: actions/checkout@v2
 
