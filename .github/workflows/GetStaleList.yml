@@ -129,6 +129,7 @@ jobs:
           packages: write
     needs: [Get_Stale_Branches,Upload_to_Github_Release]
     steps:    
+        - uses: actions/checkout@v3
         - name: Download package
           run: | 
           
@@ -137,6 +138,7 @@ jobs:
             gh release download 1.0.2
             unzip -o -q StaleBranches.zip
             ls -lrta
-            cat StaleBranches/StaleBranchList.csv 
+            echo -------------StaleBranchList.csv------------------
+            cat StaleBranches/StaleBranchList.csv
           env:
              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
