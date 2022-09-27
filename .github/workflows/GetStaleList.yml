@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   
 jobs: 
-  Get_Stale_Branches:
+  Get_Stale_Branches_and_Create_Release:
     runs-on: ubuntu-latest
     permissions:
           contents: write
@@ -113,7 +113,7 @@ jobs:
     permissions:
           contents: write
           packages: write
-    needs: [Get_Stale_Branches]
+    needs: [Get_Stale_Branches_and_Create_Release]
     environment: STALE
     steps:    
         - uses: actions/checkout@v3
@@ -138,5 +138,11 @@ jobs:
              cut -d ',' -f 1 StaleBranchDetails/StaleBranches/StaleBranchList.csv > ${{ github.workspace }}/StaleBranchname.csv
              cat ${{ github.workspace }}/StaleBranchname.csv
              
+             file="${{ github.workspace }}/StaleBranchname.csv"
+              for i in `cat $file`
+               do
+                echo "$i"
+                git push origin --delete $i
+               done
               
             
