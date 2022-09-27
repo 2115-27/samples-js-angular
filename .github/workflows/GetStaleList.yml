@@ -135,7 +135,7 @@ jobs:
              ls -lrta
 
              echo -----------StaleBranchname.csv-----------------
-             cut -d ',' -f 1 StaleBranches/StaleBranchList.csv > ${{ github.workspace }}/StaleBranchname.csv
+             cut -d ',' -f 1 StaleBranchDetails/StaleBranches/StaleBranchList.csv > ${{ github.workspace }}/StaleBranchname.csv
              cat ${{ github.workspace }}/StaleBranchname.csv
              
               
