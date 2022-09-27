@@ -83,6 +83,8 @@ jobs:
                  
       - name: Zip package
         run: |
+            pwd
+            cd samples-js-angular/
             ls -lrta
             7z a StaleBranches.zip StaleBranches
             ls -lrta
