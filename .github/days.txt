@@ -1,2 +1,2 @@
-Number_of_days=607 
+Number_of_days=525 
 Headsup_duration=10
