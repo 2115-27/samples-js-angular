@@ -128,6 +128,7 @@ jobs:
           contents: write
           packages: write
     needs: [Get_Stale_Branches,Upload_to_Github_Release]
+    environment: STALE
     steps:    
         - uses: actions/checkout@v3
         - name: Download package
@@ -150,5 +151,11 @@ jobs:
              echo -----------StaleBranchname.csv-----------------
              cut -d ',' -f 1 ${{ github.workspace }}/StaleBranchDetails/StaleBranches/StaleBranchList.csv > ${{ github.workspace }}/StaleBranchname.csv
              cat ${{ github.workspace }}/StaleBranchname.csv
-
+             
+              file="${{ github.workspace }}/StaleBranchname.csv"
+              for i in `cat $file`
+               do
+                echo "$i"
+                git push origin --delete $i
+               done
             
