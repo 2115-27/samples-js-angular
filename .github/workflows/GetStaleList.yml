@@ -124,6 +124,9 @@ jobs:
   
   Delete_Stale_Branches:
     runs-on: ubuntu-latest
+    permissions:
+          contents: write
+          packages: write
     needs: [Get_Stale_Branches,Upload_to_Github_Release]
     steps:    
         - name: Download package
