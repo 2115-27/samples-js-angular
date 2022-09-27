@@ -5,6 +5,9 @@ on:
 jobs: 
   Get_Stale_Branches:
     runs-on: ubuntu-latest
+    permissions:
+          contents: write
+          packages: write
     steps:
       - uses: actions/checkout@v2
       - name: Get Stale branch list
@@ -48,75 +51,52 @@ jobs:
           echo $date_Xdays_before_Today
           
           echo --------showing dates less than "$date_Xdays_before_Today"------------
-          awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/BranchList.csv  >> ${{ github.workspace }}/StaleBranchList.csv
+          awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/BranchList.csv  >> ${{ github.workspace }}/StaleBranches/StaleBranchList.csv
           
           echo ---------StaleBranchList.csv---
-          cat ${{ github.workspace }}/StaleBranchList.csv
-      
-      - name: Upload StaleBranchList.csv as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: StaleBranches
-          path: ${{ github.workspace }}/StaleBranchList.csv       
-
-  Upload_to_Github_Release:
-     needs: [Get_Stale_Branches]
-     runs-on: ubuntu-latest
-    
-     permissions:
-          contents: write
-          packages: write
+          cat ${{ github.workspace }}/StaleBranches/StaleBranchList.csv
+           
           
-     steps:
-        - name: Checkout code
-          uses: actions/checkout@v2
+      - name: Deleting Existing Stale_Branch Release
+        run: |     
           
-        - name: Deleting Existing Snapshot version
-          run: |     
-          
-                      gh release list >> release.txt
-                      ls -lart
-                      echo ---------Listing GitHub Releases stored in release.txt file---------
-                      cat release.txt
-                      echo ---------Deleting already existing stalebranch list to create new---------
-                      snapshotversion=$(grep -i "^Stale-Branches" release.txt | { grep -v grep || true; })
-                      echo $snapshotversion
-                      if [ -z "$snapshotversion" ];then
-                        echo "Creating Stale-Branches Release as it doesn't exist"              
-                      else
-                        echo "Deleting already existing Stale-Branches Release" 
-                        gh release delete 1.0.2
-                      fi
+                gh release list >> release.txt
+                ls -lrta
+                echo ---------Listing GitHub Releases stored in release.txt file---------
+                cat release.txt
+                echo ---------Deleting already existing stalebranch list to create new---------
+                staleRelease=$(grep -i "^Stale-Branches" release.txt | { grep -v grep || true; })
+                echo $staleRelease
+                if [ -z "$staleRelease" ];then
+                  echo "Creating Stale-Branches Release as it doesn't exist"              
+                else
+                  echo "Deleting already existing Stale-Branches Release" 
+                  gh release delete 1.0.2
+                fi
                   
-          env:
+        env:
              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
-             
-        - name: Download artifact from github
-          uses: actions/download-artifact@v3
-          with:
-            name: StaleBranches
-            path: ${{ github.workspace }}/StaleBranches
-            
-        - name: Zip package
-          run: |
+                 
+      - name: Zip package
+        run: |
             ls -lrta
             7z a StaleBranches.zip ${{ github.workspace }}/StaleBranches
             ls -lrta
             
-        - name: Create Github Release
-          id: create_release
-          uses: actions/create-release@v1
-          env:
+      - name: Create Github Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          with:
+        with:
              tag_name: 1.0.2
              release_name: Stale-Branches
 
-        - name: Upload Artifacts to Github Release
-          uses: actions/upload-release-asset@v1
-          env:
+      - name: Upload Artifacts to Github Release
+        uses: actions/upload-release-asset@v1
+        env:
              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          with:
+        with:
               upload_url: ${{ steps.create_release.outputs.upload_url }}
               asset_path: ./StaleBranches.zip
               asset_name: StaleBranches.zip
@@ -127,11 +107,11 @@ jobs:
     permissions:
           contents: write
           packages: write
-    needs: [Get_Stale_Branches,Upload_to_Github_Release]
+    needs: [Get_Stale_Branches]
     environment: STALE
     steps:    
         - uses: actions/checkout@v3
-        - name: Download package
+        - name: Download release
           run: | 
           
             mkdir StaleBranchDetails
@@ -149,13 +129,8 @@ jobs:
              ls -lrta
 
              echo -----------StaleBranchname.csv-----------------
-             cut -d ',' -f 1 ${{ github.workspace }}/StaleBranchDetails/StaleBranches/StaleBranchList.csv > ${{ github.workspace }}/StaleBranchname.csv
+             cut -d ',' -f 1 StaleBranches/StaleBranchList.csv > ${{ github.workspace }}/StaleBranchname.csv
              cat ${{ github.workspace }}/StaleBranchname.csv
              
-              file="${{ github.workspace }}/StaleBranchname.csv"
-              for i in `cat $file`
-               do
-                echo "$i"
-                git push origin --delete $i
-               done
+              
             
