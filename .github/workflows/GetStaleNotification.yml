@@ -1,0 +1,16 @@
+name: NOTIFICATION_STALE_RELEASE
+on:
+  workflow_dispatch:
+  
+jobs: 
+  Get_Stale_Branches_and_Create_Release:
+    runs-on: ubuntu-latest
+    permissions:
+          contents: write
+          packages: write
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get Stale branch list
+        run:  |
+          echo ---
+          
