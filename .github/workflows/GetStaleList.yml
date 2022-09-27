@@ -27,6 +27,7 @@ jobs:
           awk 'BEGIN{ FS= "|"; OFS=","; print "Branch,Last Committer Name,Committer Date(yyyy/mm/dd)"}; NR > 0{print $1, $2, $3;}' ${{ github.workspace }}/BranchDetails.txt > ${{ github.workspace }}/BranchList.csv
           
           echo --------BranchList.csv---------------
+          pwd
           cat ${{ github.workspace }}/BranchList.csv
           
           file="${{ github.workspace }}/.github/days.txt"
@@ -54,10 +55,10 @@ jobs:
           mkdir StaleBranches
           ls -lrta
           echo --------showing dates less than "$date_Xdays_before_Today"------------
-          awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/BranchList.csv  >> ${{ github.workspace }}/StaleBranches/StaleBranchList.csv
+          awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/BranchList.csv  >> StaleBranches/StaleBranchList.csv
           
           echo ---------StaleBranchList.csv---
-          cat ${{ github.workspace }}/StaleBranches/StaleBranchList.csv
+          cat StaleBranches/StaleBranchList.csv
            
           
       - name: Deleting Existing Stale_Branch Release
