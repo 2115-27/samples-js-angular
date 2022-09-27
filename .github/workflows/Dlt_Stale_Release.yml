@@ -141,4 +141,14 @@ jobs:
             echo -------------StaleBranchList.csv------------------
             cat StaleBranches/StaleBranchList.csv
           env:
-             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
+             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+        - name: Deleting stale branch  
+          run: |
+             pwd
+             ls -lrta
+
+             echo -----------StaleBranchname.csv-----------------
+             cut -d ',' -f 1 ${{ github.workspace }}/StaleBranches/StaleBranchList.csv > ${{ github.workspace }}/StaleBranchname.csv
+             cat ${{ github.workspace }}/StaleBranchname.csv
+
+            
