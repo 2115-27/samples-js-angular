@@ -84,7 +84,7 @@ jobs:
       - name: Zip package
         run: |
             ls -lrta
-            7z a StaleBranches.zip ${{ github.workspace }}/StaleBranches
+            7z a StaleBranches.zip StaleBranches
             ls -lrta
             
       - name: Create Github Release
