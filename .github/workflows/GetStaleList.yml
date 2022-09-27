@@ -50,6 +50,9 @@ jobs:
           echo ----------------date_Xdays_before_Today_headsup_duration_also_added-----------
           echo $date_Xdays_before_Today
           
+          pwd
+          mkdir StaleBranches
+          ls -lrta
           echo --------showing dates less than "$date_Xdays_before_Today"------------
           awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/BranchList.csv  >> ${{ github.workspace }}/StaleBranches/StaleBranchList.csv
           
