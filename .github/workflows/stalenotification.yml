@@ -1,7 +1,8 @@
 name: STALE_NOTIFICATION
 on:
   workflow_dispatch:
-  
+  schedule:
+    - cron: '0 10 * * *'
 jobs: 
   StaleNotification:
     runs-on: ubuntu-latest
