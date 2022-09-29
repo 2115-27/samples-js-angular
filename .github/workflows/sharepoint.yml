@@ -13,7 +13,7 @@ jobs:
           curl -k --ntlm -u ${{ secrets.USERNAME }}:${{ secrets.PASSWORD }} -O https://infosystechnologies.sharepoint.com/Address
           ls -lrta
   
-  Get_Stale_Branches:
+  Upload:
     runs-on: ubuntu-latest
     needs: testDownload
     steps:
