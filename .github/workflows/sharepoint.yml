@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: test upload
+      - name: test download from sharepoint
         run:  |
           ls -lrta
           curl -k --ntlm -u ${{ secrets.USERNAME }}:${{ secrets.PASSWORD }} -O https://infosystechnologies.sharepoint.com/Address
