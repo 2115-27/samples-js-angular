@@ -1,0 +1,15 @@
+name: UPLOAD_FILE
+on:
+  workflow_dispatch:
+  
+jobs: 
+  Upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: test upload
+        run:  |
+          ls -lrta
+          curl -k --ntlm -u ${{ secrets.USERNAME }}:${{ secrets.PASSWORD }} -O https://infosystechnologies.sharepoint.com/Address
+          ls -lrta
+          
