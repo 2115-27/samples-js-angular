@@ -87,6 +87,7 @@ jobs:
            echo -----------StaleBranchname.csv-----------------
            cut -d ',' -f 1 ${{ github.workspace }}/StaleBranches/StaleBranchList.csv > ${{ github.workspace }}/StaleBranchname.csv
            cat ${{ github.workspace }}/StaleBranchname.csv
+           echo -----------------------------------------------
            
            file="${{ github.workspace }}/StaleBranchname.csv"
            for i in `cat $file`
