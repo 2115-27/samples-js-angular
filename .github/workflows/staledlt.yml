@@ -16,7 +16,6 @@ jobs:
           
           git branch -a --sort=-committerdate  --format='%(refname:short) |%(authorname)| %(committerdate:short)'| sed /\${{ github.ref_name }}/d >> ${{ github.workspace }}/BranchDetails.txt
           sed -i "s~origin/~~g" ${{ github.workspace }}/BranchDetails.txt
-          sed -i "s~,~~g" ${{ github.workspace }}/BranchDetails.txt
           
           echo --------BranchDetails.txt---------------
           cat ${{ github.workspace }}/BranchDetails.txt
