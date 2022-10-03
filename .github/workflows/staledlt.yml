@@ -51,6 +51,7 @@ jobs:
           
           echo ---------StaleBranchList.csv---
           cat ${{ github.workspace }}/StaleBranchList.csv
+          echo --------------------------------
           
       - name: Upload StaleBranchList.csv as artifact
         uses: actions/upload-artifact@v3
