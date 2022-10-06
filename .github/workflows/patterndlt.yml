@@ -1,30 +1,21 @@
-name: DLT_PATTERN_TEST
+name: DLT_pattern_test
 on:
   workflow_dispatch:
-  
+  schedule:
+    - cron: '0 10 * * *'
 jobs: 
   Get_Stale_Branches:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Get Stale branch list
-        run:  |
-          REPO_NAME=${{ github.event.repository.name }}
-          echo $REPO_NAME
-          git clone https://github.com/2115-27/$REPO_NAME.git
-          cd $REPO_NAME/
+      - run: |
           
-          git branch -a --sort=-committerdate  --format='%(refname:short) |%(authorname)| %(committerdate:short)'| sed /\${{ github.ref_name }}/d >> ${{ github.workspace }}/BranchDetails.txt
-          sed -i "s~origin/~~g" ${{ github.workspace }}/BranchDetails.txt
-          sed -i "s/,/ /g" ${{ github.workspace }}/BranchDetails.txt
+          sed -i "s/,/ /g" test.txt
           
-          echo --------BranchDetails.txt---------------
-          cat ${{ github.workspace }}/BranchDetails.txt
+          echo --------test.txt---------------
+          cat ${{ github.workspace }}/test.txt
           
-          awk 'BEGIN{ FS= "|"; OFS=","; print "BRANCH,LAST COMMITER NAME,COMMITER DATE"}; NR > 0{print $1, $2, $3;}' ${{ github.workspace }}/BranchDetails.txt > ${{ github.workspace }}/BranchList.csv
-          
-          echo --------BranchList.csv---------------
-          cat ${{ github.workspace }}/BranchList.csv
+          awk 'BEGIN{ FS= "|"; OFS=","; print "Branch,Last Committer Name,Committer Date"}; NR > 0{print $1, $2, $3;}' ${{ github.workspace }}/test.txt > ${{ github.workspace }}/test.csv
           
           file="${{ github.workspace }}/.github/days.txt"
           Number_of_days=`grep Number_of_days $file |cut -d= -f2`
@@ -48,18 +39,18 @@ jobs:
           echo $date_Xdays_before_Today
           
           echo --------showing dates less than "$date_Xdays_before_Today"------------
-          awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/BranchList.csv  >> ${{ github.workspace }}/StaleBranchList.csv
-          sed -i -e '1i"BRANCH_NAME","COMMITER_NAME","LAST_COMMIT_DATE"' ${{ github.workspace }}/StaleBranchList.csv
+          awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/test.csv  >> ${{ github.workspace }}/Stale.csv
+          sed -i -e '1i"BRANCH_NAME","COMMITER_NAME","LAST_COMMIT_DATE"' ${{ github.workspace }}/Stale.csv
           
-          echo ---------StaleBranchList.csv---
-          cat ${{ github.workspace }}/StaleBranchList.csv
+          echo ---------Stale.csv---
+          cat ${{ github.workspace }}/Stale.csv
           echo --------------------------------
-          
-      - name: Upload StaleBranchList.csv as artifact
+      
+      - name: Upload Stale.csv as artifact
         uses: actions/upload-artifact@v3
         with:
-          name: StaleBranches
-          path: ${{ github.workspace }}/StaleBranchList.csv    
+          name: Stale
+          path: ${{ github.workspace }}/Stale.csv   
     
   Delete_Stale_Branches:
     runs-on: ubuntu-latest
@@ -70,14 +61,14 @@ jobs:
 
      - uses: actions/download-artifact@v3
        with:
-         name:  StaleBranches
+         name:  Stale
          path: ${{ github.workspace }}/StaleBranches 
      
      - run: |
          ls -lrta  
          cd StaleBranches/
          ls -lrta
-         cat StaleBranchList.csv
+         cat Stale.csv
          cd ..
          pwd
          
@@ -87,11 +78,11 @@ jobs:
            ls -lrta
            
            echo -----------StaleBranchname.csv-----------------
-           sed -i '1d' ${{ github.workspace }}/StaleBranches/StaleBranchList.csv | cut -d ',' -f 1 ${{ github.workspace }}/StaleBranches/StaleBranchList.csv > ${{ github.workspace }}/StaleBranchname.csv
-           cat ${{ github.workspace }}/StaleBranchname.csv
+           sed -i '1d' ${{ github.workspace }}/StaleBranches/Stale.csv | cut -d ',' -f 1 ${{ github.workspace }}/StaleBranches/Stale.csv > ${{ github.workspace }}/StaleBranchnameTest.csv
+           cat ${{ github.workspace }}/StaleBranchnameTest.csv
            echo -----------------------------------------------
            
-           file="${{ github.workspace }}/StaleBranchname.csv"
+           file="${{ github.workspace }}/StaleBranchnameTest.csv"
            for i in `cat $file`
            do
             echo "$i"
