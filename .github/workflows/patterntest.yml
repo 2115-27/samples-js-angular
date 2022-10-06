@@ -9,8 +9,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          sed -i "s~,~~g" ${{ github.workspace }}/test.csv
           
+          sed -i "s~,~~g" ${{ github.workspace }}/test.txt
+          
+          echo --------test.csv---------------
+          cat ${{ github.workspace }}/test.txt
+          
+          awk 'BEGIN{ FS= "|"; OFS=","; print "Branch,Last Committer Name,Committer Date"}; NR > 0{print $1, $2, $3;}' ${{ github.workspace }}/test.txt > ${{ github.workspace }}/test.csv
+     
       - name: Upload test.csv as artifact
         uses: actions/upload-artifact@v3
         with:
