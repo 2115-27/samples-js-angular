@@ -48,7 +48,7 @@ jobs:
           echo $date_Xdays_before_Today
           
           echo --------showing dates less than "$date_Xdays_before_Today"------------
-          awk -F '\t' 'NR>1 && NF=1' BranchList.csv  >> ${{ github.workspace }}/StaleBranchList.csv
+          awk -F '\t' 'NR>1 && NF=1' ${{ github.workspace }}/BranchList.csv  >> ${{ github.workspace }}/StaleBranchList.csv
           
           echo ---------StaleBranchList.csv---
           cat ${{ github.workspace }}/StaleBranchList.csv
