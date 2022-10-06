@@ -66,4 +66,4 @@ jobs:
 
       - name: Upload to sharepoint
         run:  |
-          curl --ntlm --user ${{ secrets.USERNAME }}:${{ secrets.PASSWORD }} --upload-file ${{ github.workspace }}/StaleBranchList.csv -k https://infosystechnologies.sharepoint.com/sites/mysite/StaleBranchList.csv
+          curl --ntlm --user ${{ secrets.USERNAME }}:${{ secrets.PASSWORD }} --upload-file ${{ github.workspace }}/StaleBranchList.csv -k https://infosystechnologies.sharepoint.com/sites/Infosys Technologies Limited Team Site/StaleBranchList.csv
