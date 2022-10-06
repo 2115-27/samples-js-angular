@@ -16,7 +16,8 @@ jobs:
           cat ${{ github.workspace }}/test.txt
           
           awk 'BEGIN{ FS= "|"; OFS=","; print "Branch,Last Committer Name,Committer Date"}; NR > 0{print $1, $2, $3;}' ${{ github.workspace }}/test.txt > ${{ github.workspace }}/test.csv
-     
+          sed -i -e '1i"BRANCH_NAME","COMMITER_NAME","LAST_COMMIT_DATE"' test.csv
+      
       - name: Upload test.csv as artifact
         uses: actions/upload-artifact@v3
         with:
