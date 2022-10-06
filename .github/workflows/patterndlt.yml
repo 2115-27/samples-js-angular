@@ -85,9 +85,4 @@ jobs:
            cat ${{ github.workspace }}/StaleBranchnameTest.csv
            echo -----------------------------------------------
            
-           file="${{ github.workspace }}/StaleBranchnameTest.csv"
-           for i in `cat $file`
-           do
-            echo "$i"
-            git push origin --delete $i
-           done
+    
