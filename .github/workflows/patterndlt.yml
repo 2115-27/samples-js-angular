@@ -1,4 +1,4 @@
-name: DLT_STALE_TWO
+name: DLT_PATTERN_TEST
 on:
   workflow_dispatch:
   
