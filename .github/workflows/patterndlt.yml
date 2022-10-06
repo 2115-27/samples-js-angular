@@ -17,6 +17,9 @@ jobs:
           
           awk 'BEGIN{ FS= "|"; OFS=","; print "Branch,Last Committer Name,Committer Date"}; NR > 0{print $1, $2, $3;}' ${{ github.workspace }}/test.txt > ${{ github.workspace }}/test.csv
           
+          echo -----------test.csv------
+          cat ${{ github.workspace }}/test.csv
+          
           file="${{ github.workspace }}/.github/days.txt"
           Number_of_days=`grep Number_of_days $file |cut -d= -f2`
           Headsup_duration=`grep Headsup_duration $file |cut -d= -f2`
@@ -40,7 +43,7 @@ jobs:
           
           echo --------showing dates less than "$date_Xdays_before_Today"------------
           awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/test.csv  >> ${{ github.workspace }}/Stale.csv
-          sed -i -e '1i"BRANCH_NAME","COMMITER_NAME","LAST_COMMIT_DATE"' ${{ github.workspace }}/Stale.csv
+          
           
           echo ---------Stale.csv---
           cat ${{ github.workspace }}/Stale.csv
