@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-         GITHUB_WORKFLOW_URL=https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA/checks?check_suite_id=$GITHUB_CHECK_SUITE_ID
+         GITHUB_WORKFLOW_URL="https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA/checks?check_suite_id=$GITHUB_CHECK_SUITE_ID"
          echo  ${{ github.workflow }}
          echo  ${{ github.run_number }}
          echo $GITHUB_WORKFLOW_URL
