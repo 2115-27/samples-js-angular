@@ -1,5 +1,5 @@
-brnachname1 |Commiter,name1| 2022-06-10
-brnachname2 |Commiter,name2| 2021-04-28
-brnachname3 |Commiter,name3| 2021-04-28
-brnachname4 |Commitername4| 2021-05-17
-brnachname4 |Commitername4| 2021-05-01
+brnachname1|Commiter,name1|2022-06-10
+brnachname2|Commiter,name2|2021-04-28
+brnachname3|Commiter,name3|2021-04-28
+brnachname4|Commitername4|2021-05-17
+brnachname4|Commitername4|2021-05-01
