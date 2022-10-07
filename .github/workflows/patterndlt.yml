@@ -12,9 +12,8 @@ jobs:
           
           echo -------before sed --test.txt---------------
           cat ${{ github.workspace }}/test.txt
-          sed -i "s~origin/~~g" ${{ github.workspace }}/test.txt
-          sed -i "s~,~~g" ${{ github.workspace }}/test.txt
-          sed 's/\([[:alpha:]]\+\) \([[:alpha:]]\+\)/\2 \1/' ${{ github.workspace }}/test.txt
+
+          sed 's/\([[:alpha:]]\+\) \(,[[:space:]]*\) \([[:alpha:]]\+\)/\2 \1/' ${{ github.workspace }}/test.txt
           
           echo --------test.txt---------------
           cat ${{ github.workspace }}/test.txt
