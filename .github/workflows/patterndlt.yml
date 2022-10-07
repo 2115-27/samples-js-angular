@@ -10,6 +10,10 @@ jobs:
       - uses: actions/checkout@v2
       - run: |
           
+          echo -------before sed --test.txt---------------
+          cat ${{ github.workspace }}/test.txt
+          
+          sed -i "s/^\([^#]*\) *\([,]*\)/\2\1/g" test.txt
           sed -i "s/,/ /g" test.txt
           
           echo --------test.txt---------------
