@@ -1,4 +1,4 @@
-vm-interaction-code-flow-README|Vijet, M|(2021-06-16)
-vm-update-okta-angular|Vijet M, firstname|(2021-04-28)
-vm-social-login-support|Vijet M|(2021-04-28)
-vm-upgrade-okta-angular|Vijet M|(2021-04-28)
+vm-interaction-code-flow-README|S, Athulya|(2021-06-16)
+vm-update-okta-angular|M S, Athulya|(2021-04-28)
+vm-social-login-support|Athulya M S|(2021-04-28)
+vm-upgrade-okta-angular|Athulya M S|(2021-04-28)
