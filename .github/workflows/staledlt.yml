@@ -87,7 +87,7 @@ jobs:
            ls -lrta
            
            echo -----------StaleBranchname.csv-----------------
-           sed -i '' 1d ${{ github.workspace }}/StaleBranches/StaleBranchList.csv
+           sed -i '1d' ${{ github.workspace }}/StaleBranches/StaleBranchList.csv
            cut -d ',' -f 1 ${{ github.workspace }}/StaleBranches/StaleBranchList.csv > ${{ github.workspace }}/StaleBranchname.csv
            cat ${{ github.workspace }}/StaleBranchname.csv
            echo -----------------------------------------------
