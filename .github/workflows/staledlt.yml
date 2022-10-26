@@ -16,6 +16,7 @@ jobs:
           
           git branch -a --sort=-committerdate  --format='%(refname:short) |%(authorname)| %(committerdate:short)'| sed /\${{ github.ref_name }}/d >> ${{ github.workspace }}/BranchDetails.txt
           sed -i "s~origin/~~g" ${{ github.workspace }}/BranchDetails.txt
+          sed -i "s~,~~g" ${{ github.workspace }}/BranchDetails.txt
           
           echo --------BranchDetails.txt---------------
           cat ${{ github.workspace }}/BranchDetails.txt
@@ -48,6 +49,7 @@ jobs:
           
           echo --------showing dates less than "$date_Xdays_before_Today"------------
           awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/BranchList.csv  >> ${{ github.workspace }}/StaleBranchList.csv
+          sed -i -e '1i"BRANCH_NAME","COMMITER_NAME","LAST_COMMIT_DATE"' ${{ github.workspace }}/StaleBranchList.csv
           
           echo ---------StaleBranchList.csv---
           cat ${{ github.workspace }}/StaleBranchList.csv
@@ -85,6 +87,7 @@ jobs:
            ls -lrta
            
            echo -----------StaleBranchname.csv-----------------
+           sed -i '' 1d ${{ github.workspace }}/StaleBranches/StaleBranchList.csv
            cut -d ',' -f 1 ${{ github.workspace }}/StaleBranches/StaleBranchList.csv > ${{ github.workspace }}/StaleBranchname.csv
            cat ${{ github.workspace }}/StaleBranchname.csv
            echo -----------------------------------------------
