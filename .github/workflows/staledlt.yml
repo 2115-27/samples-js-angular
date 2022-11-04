@@ -58,7 +58,7 @@ jobs:
       - name: Upload StaleBranchList.csv as artifact
         uses: actions/upload-artifact@v3
         with:
-          name: StaleBranches
+          name: newnameStaleBranches
           path: ${{ github.workspace }}/StaleBranchList.csv    
     
   Delete_Stale_Branches:
@@ -70,7 +70,7 @@ jobs:
 
      - uses: actions/download-artifact@v3
        with:
-         name:  StaleBranches
+         name:  newnameStaleBranches
          path: ${{ github.workspace }}/StaleBranches 
      
      - run: |
