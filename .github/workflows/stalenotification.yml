@@ -48,6 +48,9 @@ jobs:
           echo ----------------date_Xdays_before_Today_headsup_duration_not_added-----------
           echo $date_Xdays_before_Today
           
+          echo -------------------testing-------------------------
+          awk '!/^(sw-okta|IGNORE|END)/' ${{ github.workspace }}/BranchList.csv
+          
           echo --------showing dates less than "$date_Xdays_before_Today"------------
           awk '!/^(sw-okta|IGNORE|END)/' ${{ github.workspace }}/BranchList.csv | awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/BranchList.csv  >> ${{ github.workspace }}/StaleBranchList.csv
           
