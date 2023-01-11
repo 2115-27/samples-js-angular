@@ -49,10 +49,10 @@ jobs:
           echo $date_Xdays_before_Today
           
           echo -------------------testing-------------------------
-          awk '!/^(sw-okta|IGNORE|END)/' ${{ github.workspace }}/BranchList.csv
+          awk '!/^(sw-okta|IGNORE|END)/' ${{ github.workspace }}/BranchList.csv >> ${{ github.workspace }}/BranchList2.csv
           
           echo --------showing dates less than "$date_Xdays_before_Today"------------
-          awk '!/^(sw-okta|IGNORE|END)/' ${{ github.workspace }}/BranchList.csv | awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/BranchList.csv  >> ${{ github.workspace }}/StaleBranchList.csv
+          awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/BranchList2.csv  >> ${{ github.workspace }}/StaleBranchList.csv
           
           echo ---------StaleBranchList.csv---
           cat ${{ github.workspace }}/StaleBranchList.csv
