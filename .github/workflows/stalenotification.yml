@@ -56,7 +56,7 @@ jobs:
           echo "---------------Branches te exclude----------------"
           echo $Dev_Branch
           echo $HF_Branch
-          echo $RL_Branch
+          echo ${RL_Branch}is the release branch
           echo $MSTR_Branch
           
           echo -------------------testing-------------------------
