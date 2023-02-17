@@ -61,7 +61,7 @@ jobs:
           
           echo -------------------testing-------------------------
           awk -v Dev_Branch='$Dev_Branch' -v HF_Branch="$HF_Branch" -v RL_Branch="$RL_Branch" -v MSTR_Branch="$MSTR_Branch" '!/^(Dev_Branch|HF_Branch|ag-authjs-canary-6 |MSTR_Branch)/' ${{ github.workspace }}/BranchList.csv 
-          awk -v Dev_Branch="$Dev_Branch" -v HF_Branch="$HF_Branch" -v RL_Branch="$RL_Branch" -v MSTR_Branch="$MSTR_Branch" '!($0 ~ ("^" Dev_Branch) || $0 ~ ("^" HF_Branch))' input.txt
+          awk -v Dev_Branch="$Dev_Branch" -v HF_Branch="$HF_Branch" -v RL_Branch="$RL_Branch" -v MSTR_Branch="$MSTR_Branch" '!($0 ~ ("^" Dev_Branch) || $0 ~ ("^" HF_Branch))' ${{ github.workspace }}/BranchList.csv
 
           
 #           echo --------showing dates less than "$date_Xdays_before_Today"------------
