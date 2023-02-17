@@ -1,6 +1,6 @@
 {
-  "HOTFIX_BRANCH": "hotfix-23.1.1",
-  "RELEASE_BRANCH": "Release-PI2301",
-  "DEVELOPMENT_BRANCH": "development",
-  "MASTER_BRANCH": "master"
+  "HOTFIX_BRANCH": "sw-okta-",
+  "RELEASE_BRANCH": "ag-authjs-canary-6",
+  "DEVELOPMENT_BRANCH": "od-onAuthRequired-modal-OKTA-445785",
+  "MASTER_BRANCH": "od-OKTA-450240-dotenv"
 }
