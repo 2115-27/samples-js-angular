@@ -60,7 +60,7 @@ jobs:
           echo $MSTR_Branch
           
           echo -------------------testing-------------------------
-          awk -v Dev_Branch="$Dev_Branch" -v HF_Branch="$HF_Branch" -v RL_Branch="$RL_Branch" -v MSTR_Branch="$MSTR_Branch" '!/^(Dev_Branch|HF_Branch|RL_Branch|MSTR_Branch)/' ${{ github.workspace }}/BranchList.csv 
+          awk -v Dev_Branch="$Dev_Branch" -v HF_Branch="$HF_Branch" -v RL_Branch="$RL_Branch" -v MSTR_Branch="$MSTR_Branch" '!/^(Dev_Branch|HF_Branch|ag-authjs-canary-6 |MSTR_Branch)/' ${{ github.workspace }}/BranchList.csv 
           
 #           echo --------showing dates less than "$date_Xdays_before_Today"------------
 #           awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/BranchList2.csv  >> ${{ github.workspace }}/StaleBranchList.csv
