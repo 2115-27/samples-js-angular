@@ -56,20 +56,20 @@ jobs:
           echo -------------------testing-------------------------
           awk '!/^($Dev_Branch|$HF_Branch|$RL_Branch|$MSTR_Branch)/' ${{ github.workspace }}/BranchList.csv 
           
-          echo --------showing dates less than "$date_Xdays_before_Today"------------
-          awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/BranchList2.csv  >> ${{ github.workspace }}/StaleBranchList.csv
+#           echo --------showing dates less than "$date_Xdays_before_Today"------------
+#           awk -v date_Xdays_before_Today="$date_Xdays_before_Today" '$NF < date_Xdays_before_Today' ${{ github.workspace }}/BranchList2.csv  >> ${{ github.workspace }}/StaleBranchList.csv
           
-          echo ---------StaleBranchList.csv---
-          cat ${{ github.workspace }}/StaleBranchList.csv
+#           echo ---------StaleBranchList.csv---
+#           cat ${{ github.workspace }}/StaleBranchList.csv
       
-      - name: Upload StaleBranchList.csv as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: StaleBranchList.csv
-          path: ${{ github.workspace }}/StaleBranchList.csv
+#       - name: Upload StaleBranchList.csv as artifact
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: StaleBranchList.csv
+#           path: ${{ github.workspace }}/StaleBranchList.csv
      
-      - name : Sending notification
-        run: |
-          echo sending notification
+#       - name : Sending notification
+#         run: |
+#           echo sending notification
           
      
