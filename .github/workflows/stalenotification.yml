@@ -53,6 +53,12 @@ jobs:
           RL_Branch=$(cat .github/StalebranchExclusion.json | jq -r '.RELEASE_BRANCH')
           MSTR_Branch=$(cat .github/StalebranchExclusion.json | jq -r '.MASTER_BRANCH')
           
+          echo "---------------Branches te exclude----------------"
+          echo $Dev_Branch
+          echo $HF_Branch
+          echo $RL_Branch
+          echo $MSTR_Branch
+          
           echo -------------------testing-------------------------
           awk -v Dev_Branch="$Dev_Branch" -v HF_Branch="$HF_Branch" -v RL_Branch="$RL_Branch" -v MSTR_Branch="$MSTR_Branch" '!/^(Dev_Branch|HF_Branch|RL_Branch|MSTR_Branch)/' ${{ github.workspace }}/BranchList.csv 
           
