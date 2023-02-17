@@ -48,10 +48,10 @@ jobs:
           echo ----------------date_Xdays_before_Today_headsup_duration_not_added-----------
           echo $date_Xdays_before_Today
           
-          Dev_Branch=$(cat .github/versions/Build-Properties.json | jq -r '.DEVELOPMENT_BRANCH')
-          HF_Branch=$(cat .github/versions/Build-Properties.json | jq -r '.HOTFIX_BRANCH')
-          RL_Branch=$(cat .github/versions/Build-Properties.json | jq -r '.RELEASE_BRANCH')
-          MSTR_Branch=$(cat .github/versions/Build-Properties.json | jq -r '.MASTER_BRANCH')
+          Dev_Branch=$(cat .github/StalebranchExclusion.json | jq -r '.DEVELOPMENT_BRANCH')
+          HF_Branch=$(cat .github/StalebranchExclusion.json | jq -r '.HOTFIX_BRANCH')
+          RL_Branch=$(cat .github/StalebranchExclusion.json | jq -r '.RELEASE_BRANCH')
+          MSTR_Branch=$(cat .github/StalebranchExclusion.json | jq -r '.MASTER_BRANCH')
           
           echo -------------------testing-------------------------
           awk -v Dev_Branch="$Dev_Branch" -v HF_Branch="$HF_Branch" -v RL_Branch="$RL_Branch" -v MSTR_Branch="$MSTR_Branch" '!/^(Dev_Branch|HF_Branch|RL_Branch|MSTR_Branch)/' ${{ github.workspace }}/BranchList.csv 
