@@ -48,9 +48,14 @@ jobs:
           echo ----------------date_Xdays_before_Today_headsup_duration_not_added-----------
           echo $date_Xdays_before_Today
           
-          Branches=$(cat .github/StalebranchExclusion.json | jq -r '.Branches')
-          echo ================================================================
-          echo $Branches 
+          File=${{ github.workspace }}/StalebranchExclusion.json
+              Official_Branch_List=($(jq -r '.Branches' $File))
+              for i in "${Official_Branch_List[@]}"
+              do            
+                  echo -------------------------------
+                  echo $i
+              done
+              
           
           echo -------------------testing-------------------------
           awk -v Branches="$Branches" -v HF_Branch="$HF_Branch" -v RL_Branch="$RL_Branch " -v MSTR_Branch="$MSTR_Branch" '!($0 ~ ("^" Branches) || $0 ~ ("^" HF_Branch) || $0 ~ ("^" RL_Branch) || $0 ~ ("^" MSTR_Branch))' ${{ github.workspace }}/BranchList.csv
