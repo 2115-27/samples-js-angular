@@ -54,6 +54,7 @@ jobs:
               do            
                   echo -------------------------------
                   echo $i
+                  awk -v Branches="$i " '!($0 ~ ("^" Branches) || $0 ~ ("^" HF_Branch) || $0 ~ ("^" RL_Branch) || $0 ~ ("^" MSTR_Branch))' ${{ github.workspace }}/BranchList.csv >
               done
               
           
