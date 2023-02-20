@@ -48,7 +48,7 @@ jobs:
           echo ----------------date_Xdays_before_Today_headsup_duration_not_added-----------
           echo $date_Xdays_before_Today
           
-          File=${{ github.workspace }}/StalebranchExclusion.json
+          File=${{ github.workspace }}/.github/StalebranchExclusion.json
               Official_Branch_List=($(jq -r '.Branches' $File))
               for i in "${Official_Branch_List[@]}"
               do            
