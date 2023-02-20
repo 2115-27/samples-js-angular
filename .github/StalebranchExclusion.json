@@ -1,6 +1,3 @@
 {
-  "HOTFIX_BRANCH": "sw-okta-",
-  "RELEASE_BRANCH": "ag-authjs-canary-6",
-  "DEVELOPMENT_BRANCH": "od-onAuthRequired-modal-OKTA-445785",
-  "MASTER_BRANCH": "od-OKTA-450240-dotenv"
+  "Branches": ["sw-okta-","ag-authjs-canary-6","od-onAuthRequired-modal-OKTA-445785","od-OKTA-450240-dotenv"]
 }
