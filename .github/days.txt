@@ -1,2 +1,2 @@
 Number_of_days=404
-Headsup_duration=0
+Headsup_duration=2
